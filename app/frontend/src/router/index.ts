@@ -11,25 +11,12 @@ import Login from '../views/Login.vue'
 import Profile from '../views/Profile.vue'
 import Logout from '../views/Logout.vue'
 import SSO from '../views/SSO.vue'
-import Signup from '../views/Signup.vue'
 import CompleteLogin from '../views/CompleteLogin.vue'
 import CompleteSignup from '../views/CompleteSignup.vue'
 
 Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home,
-    meta: { noAuth: true }
-  },
-  {
-    path: '/signup/',
-    name: 'Signup',
-    component: Signup,
-    meta: { noAuth: true }
-  },
   {
     path: '/signup/:token',
     name: 'CompleteSignup',
@@ -48,13 +35,17 @@ const routes: Array<RouteConfig> = [
     component: CompleteLogin,
     meta: { noAuth: true }
   },
+
+  {
+    path: '/',
+    name: 'Home',
+    component: Home
+  },
   {
     path: '/about',
     name: 'About',
-    component: About,
-    meta: { noAuth: true }
+    component: About
   },
-
   {
     path: '/sso',
     name: 'SSO',
