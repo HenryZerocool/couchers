@@ -66,15 +66,15 @@ class User(Base):
 
     # TODO: hosting fields
 
-    @property
-    def age(self):
-        max_day = monthrange(date.today().year, self.birthdate.month)[1]
-        age = date.today().year - self.birthdate.year
+    def age(self, *, today_function=date.today):
+        today = today_function()
+        max_day = monthrange(today.year, self.birthdate.month)[1]
+        age = today.year - self.birthdate.year
         #in case of leap-day babies, make sure the date is valid for this year
         safe_birthdate = self.birthdate
         if (self.birthdate.day > max_day):
             safe_birthdate = safe_birthdate.replace(day = max_day)
-        if date.today() < safe_birthdate.replace(year=date.today().year):
+        if today < safe_birthdate.replace(year=today.year):
             age -= 1
         return age
 
@@ -90,6 +90,13 @@ class User(Base):
 
     def __repr__(self):
         return f"User(id={self.id}, email={self.email}, username={self.username})"
+
+
+def test_age():
+    today = lambda: date(2019, 7, 5)
+    assert User(birthdate=date(1990, 7, 4)).age(today_function=today) == 29
+    assert User(birthdate=date(1990, 7, 31)).age(today_function=today) == 28
+    assert User(birthdate=date(1992, 2, 29)).age(today_function=today) == 27
 
 
 class SignupToken(Base):
