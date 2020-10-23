@@ -13,4 +13,5 @@ pytest-pythonpath
 python-dateutil
 pytz
 requests
+Shapely
 sqlalchemy
